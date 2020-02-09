@@ -1,35 +1,22 @@
 import React from 'react';
 import { shallow, configure } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-configure({ adapter: new Adapter() });
-
 import App from './App';
+import Adapter from 'enzyme-adapter-react-16';
+configure({adapter: new Adapter()})
+
 
 describe('App', () => {
-        
   const app = shallow(<App />);
-  it('renders correctly', () => {
+
+  it('renders properly', () => {
     expect(app).toMatchSnapshot();
   });
-  it('initializes the `state` with an empty list of gifts', () => {
-    expect(app.state().gifts).toEqual([]);
+
+  it('contains a connected Wallet component', () => {
+    expect(app.find('Connect(Wallet)').exists()).toBe(true);
   });
 
-  describe('when clicking `add-gift` button', () => {
-    beforeEach(() => {
-      app.find('.btn-add').simulate('click');
-    });
-
-    afterEach(() => {
-      app.setState({gifts: []});
-    })
-    
-    it('adds a new gift to `state`', () => {
-      expect(app.state().gifts).toEqual([{ id: 1 }]);
-    });
-
-    it('adds new gift to the rendered list', () => {
-      expect(app.find('.gift-list').children().length).toEqual(1);
-    });    
-  });  
-});
+  it('contains a connected Loot component', () => {
+    expect(app.find('Connect(Loot)').exists()).toBe(true);
+  });
+})
